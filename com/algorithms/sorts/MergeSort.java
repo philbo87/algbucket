@@ -4,13 +4,36 @@ package com.algorithms.sorts;
 public class MergeSort {
 
 	public static void main(String[] args) {
-		int[] input = { 22, 33, 11, 4, 643, 9, 0, 234, 99, 100 };
-		int[] output = mergeSort(input);
+		int[] input = { 10, 20, 0, 0 };
+		int[] input2 = { 1, 21 };
+		
+		//Weave them together
+		int input2Index = 0;
+		for(int input1Index = 0; input1Index<input.length; input1Index++)
+		{
+			if(input[input1Index]==0){
+				input[input1Index] = input2[input2Index];
+				input2Index++;
+			}
+		}
+//		int[] output = merge(input,input2);
+		int[] output = mergeSortFromBook(input, new int[input.length], 0, input.length-1);
+		// int[] output = mergeSort(input);
 		for (int i : output) {
 			System.out.print(" " + i);
 		}
 	}
 
+	public static int[] mergeSortFromBook(int[] array, int[] helper, int low, int high){
+		if(low< high){
+			int middle = (low+high)/2;
+			mergeSortFromBook(array,helper,low,middle);
+			mergeSortFromBook(array,helper,middle+1,high);
+			return mergeFromBook(array,helper,low,middle,high);
+			
+		}
+		return null;
+	}
 	public static int[] mergeSort(int[] array) {
 		if (array.length == 1) {
 			return array;
@@ -95,5 +118,40 @@ public class MergeSort {
 		}
 		return merged;
 
+	}
+
+	static int[] mergeFromBook(int[] array, int[] helper, int low, int middle, int high) {
+		/* Copy both halves into a helper array */
+		for (int i = low; i <= high; i++) {
+			helper[i] = array[i];
+		}
+
+		int helperLeft = low;
+		int helperRight = middle + 1;
+		int current = low;
+
+		/*
+		 * Iterate through helper array. Compare the left and right half,
+		 * copying back the smaller element from the two halves into the
+		 * original array
+		 */
+		while(helperLeft <= middle && helperRight <= high){
+			if(helper[helperLeft] <= helper[helperRight]){
+				array[current] = helper[helperLeft];
+				helperLeft++;
+			}else{//If right element is smaller than left element
+				array[current] = helper[helperRight];
+				helperRight++;
+			}
+			current++;
+		}
+		
+		//Copy the rest of the left side of the array into the target array
+		int remaining = middle - helperLeft;
+		for(int i =0; i<= remaining; i++){
+			array[current+1] = helper[helperLeft+1];
+		}
+		
+		return array;
 	}
 }
