@@ -53,6 +53,7 @@ public class Tree {
 //		System.out.println("LCA " + findCommonAncestor(n99,n102,n103).getV());
 	}
 	
+	//DFS, O(n)
 	public static void preOrder(TreeNode node){
 		if(node != null){
 			printNode(node);
@@ -61,6 +62,7 @@ public class Tree {
 		}
 	}
 	
+	//DFS: O(n)
 	public static void inOrder(TreeNode node){
 		if(node != null){
 			inOrder(node.getLeft());
@@ -69,6 +71,7 @@ public class Tree {
 		}
 	}
 	
+	//DFS: O(n)
 	public static void postOrder(TreeNode node){
 		if(node != null){
 			postOrder(node.getLeft());
