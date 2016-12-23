@@ -20,10 +20,13 @@ public class BinarySearchTree extends Tree {
 		insert(new TreeNode(300), root);
 		insert(new TreeNode(299), root);
 		insert(new TreeNode(298), root);
-		insert(new TreeNode(297), root);
+		TreeNode two97 = new TreeNode(297);
+		insert(two97, root);
 		TreeNode last = new TreeNode(296);
 		insert(last, root);
 		printNode(successor(last));
+		printNode(predecessor(two97));
+		printNode(predecessor(last));
 		
 		root = null;
 		insert(new TreeNode(300), root);
@@ -33,7 +36,7 @@ public class BinarySearchTree extends Tree {
 		TreeNode last2 = new TreeNode(102);
 		insert(last2, root);
 		printNode(successor(last2));
-		
+		printNode(predecessor(last2));
 	}
 
 	//Get successor node O(h)
@@ -42,18 +45,27 @@ public class BinarySearchTree extends Tree {
 		if (node.getRight() != null) {
 			return min(node.getRight());
 		} else {
-			TreeNode y = node.getParent();
-			while (y != null && y.getParent() != null && y.getLeft() == null) {
-				y = y.getParent();
+			TreeNode parent = node.getParent();
+			while (parent != null && parent.getParent() != null && parent.getLeft() == null && parent.getRight() != null) {
+				parent = parent.getParent();
 			}
-			return y;
+			return parent;
 		}
 	}
 	
 	//Get predecessor node O(h)
 	//Predecessor is the next smallest node
 	private static TreeNode predecessor(TreeNode node){
-		return null;
+		if(node.getLeft() != null){
+			return max(node.getLeft());
+		}else{
+			TreeNode parent = node.getParent();
+			while(parent != null && parent.getParent() != null && parent.getRight() == null && parent.getLeft() != null){
+				parent = parent.getParent();
+			}
+			
+			return parent;
+		}
 	}
 
 	// To find the max, just go all the way down the right path of the tree
