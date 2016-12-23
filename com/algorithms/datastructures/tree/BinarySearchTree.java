@@ -12,6 +12,29 @@ public class BinarySearchTree extends Tree{
 		insert(new TreeNode(7),root);
 		insert(new TreeNode(95),root);
 		inOrder(root);
+		
+		printNode(max(root));
+		printNode(min(root));
+	}
+	
+	//To find the max, just go all the way down the right path of the tree
+	//O(height) 
+	private static TreeNode max(TreeNode root){
+		TreeNode current = root;
+		while(current.getRight() != null){
+			current = current.getRight();
+		}
+		return current;
+	}
+	
+	//To find the min, go all the way down the left path of the tree
+	//O(height)
+	private static TreeNode min(TreeNode root){
+		TreeNode current = root;
+		while(current.getLeft() != null){
+			current = current.getLeft();
+		}
+		return current;
 	}
 	
 	/**
