@@ -5,7 +5,16 @@ public class TreeNode {
 	private int v;
 	private TreeNode left;
 	private TreeNode right;
+	private TreeNode parent;
 	
+	public TreeNode getParent() {
+		return parent;
+	}
+
+	public void setParent(TreeNode parent) {
+		this.parent = parent;
+	}
+
 	public TreeNode(int val){
 		setV(val);
 	}

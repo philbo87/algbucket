@@ -4,21 +4,21 @@ package com.algorithms.sorts;
 public class MergeSort {
 
 	public static void main(String[] args) {
-		int[] input = { 10, 20, 0, 0 };
-		int[] input2 = { 1, 21 };
+		int[] input = { 4,2,3};
+		//int[] input2 = { 1, 21 };
 		
 		//Weave them together
-		int input2Index = 0;
-		for(int input1Index = 0; input1Index<input.length; input1Index++)
-		{
-			if(input[input1Index]==0){
-				input[input1Index] = input2[input2Index];
-				input2Index++;
-			}
-		}
+//		int input2Index = 0;
+//		for(int input1Index = 0; input1Index<input.length; input1Index++)
+//		{
+//			if(input[input1Index]==0){
+//				input[input1Index] = input2[input2Index];
+//				input2Index++;
+//			}
+//		}
 //		int[] output = merge(input,input2);
-		int[] output = mergeSortFromBook(input, new int[input.length], 0, input.length-1);
-		// int[] output = mergeSort(input);
+		//int[] output = mergeSortFromBook(input, new int[input.length], 0, input.length-1);
+		 int[] output = mergeSort(input);
 		for (int i : output) {
 			System.out.print(" " + i);
 		}
@@ -101,6 +101,7 @@ public class MergeSort {
 				// Figure out which still has elements, and add them all in in
 				// order to the result
 				if (leftIndex >= l.length) {
+					//Left is exhausted
 					while (rightIndex < r.length) {
 						merged[mergedIndex] = r[rightIndex];
 						mergedIndex++;
@@ -108,6 +109,7 @@ public class MergeSort {
 					}
 				}
 				if (rightIndex >= r.length) {
+					//Right is Exhausted
 					while (leftIndex < l.length) {
 						merged[mergedIndex] = l[leftIndex];
 						leftIndex++;
@@ -148,7 +150,7 @@ public class MergeSort {
 		
 		//Copy the rest of the left side of the array into the target array
 		int remaining = middle - helperLeft;
-		for(int i =0; i<= remaining; i++){
+		for(int i =0; i< remaining; i++){
 			array[current+1] = helper[helperLeft+1];
 		}
 		
