@@ -73,14 +73,17 @@ public class BinarySearchTree extends Tree {
 		
 		root = null;
 		insert(new TreeNode(600), root);
-		TreeNode originalParent = new TreeNode(150);
-		insert(originalParent, root);
+		TreeNode x = new TreeNode(150);
+		insert(x, root);
 		insert(new TreeNode(100), root);
-		insert(new TreeNode(250), root);
+		TreeNode y = new TreeNode(250);
+		insert(y, root);
 		insert(new TreeNode(275), root);
 		insert(new TreeNode(225), root);
 		inOrder(root);
-		leftRotate(originalParent);
+		leftRotate(x);
+		inOrder(root);
+		rightRotate(y);
 		inOrder(root);
 	}
 
@@ -102,6 +105,26 @@ public class BinarySearchTree extends Tree {
 		
 		y.setLeft(x);
 		x.setParent(y);
+	}
+	
+	private static void rightRotate(TreeNode y){
+		TreeNode x = y.getLeft();
+		y.setLeft(x.getRight());
+		x.setRight(y);
+		x.setParent(y.getParent());
+		
+		if(y.getParent() == null){
+			root = x;
+		}else{
+			if(y.equals(y.getParent().getLeft())){
+				y.getParent().setLeft(x);
+			}else{
+				y.getParent().setRight(x);
+			}
+		}
+		
+		x.setRight(y);
+		y.setParent(x);
 	}
 	
 	// O(h)
