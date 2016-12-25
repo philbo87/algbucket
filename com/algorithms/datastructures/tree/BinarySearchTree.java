@@ -70,9 +70,40 @@ public class BinarySearchTree extends Tree {
 		insert(new TreeNode(18), root);
 		insert(new TreeNode(23), root);
 		delete(z);
+		
+		root = null;
+		insert(new TreeNode(600), root);
+		TreeNode originalParent = new TreeNode(150);
+		insert(originalParent, root);
+		insert(new TreeNode(100), root);
+		insert(new TreeNode(250), root);
+		insert(new TreeNode(275), root);
+		insert(new TreeNode(225), root);
+		inOrder(root);
+		leftRotate(originalParent);
 		inOrder(root);
 	}
 
+	private static void leftRotate(TreeNode x){
+		TreeNode y = x.getRight();
+		x.setRight(y.getLeft());
+		y.setLeft(x);
+		y.setParent(x.getParent());
+		
+		if(x.getParent() == null){
+			root = y;
+		}else{
+			if(x.equals(x.getParent().getLeft())){
+				x.getParent().setLeft(y);
+			}else{
+				x.getParent().setRight(y);
+			}
+		}
+		
+		y.setLeft(x);
+		x.setParent(y);
+	}
+	
 	// O(h)
 	private static void delete(TreeNode node) {
 		if (node.getLeft() == null && node.getRight() == null) {
