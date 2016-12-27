@@ -7,6 +7,9 @@ public class TreeNode {
 	private TreeNode right;
 	private TreeNode parent;
 	
+	//Augment the Data structure for AVL trees where we cannot afford to always compute the height 
+	private int height = 0; 
+	
 	public TreeNode getParent() {
 		return parent;
 	}
@@ -41,6 +44,14 @@ public class TreeNode {
 
 	public void setLeft(TreeNode left) {
 		this.left = left;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
 	}
 	
 	

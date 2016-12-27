@@ -38,56 +38,68 @@ public class BinarySearchTree extends Tree {
 		// printNode(successor(last2));
 		// printNode(predecessor(last2));
 
-		root = null;
-		TreeNode firstNode = new TreeNode(105);
-		insert(firstNode, root);
-		TreeNode secondNode = new TreeNode(75);
-		insert(secondNode, root);
-		TreeNode thirdNode = new TreeNode(205);
-		insert(thirdNode, root);
-		TreeNode fourthNode = new TreeNode(315);
-		insert(fourthNode, root);
-		TreeNode fifthNode = new TreeNode(170);
-		insert(fifthNode, root);
-		TreeNode sixthNode = new TreeNode(160);
-		insert(sixthNode, root);
-		TreeNode seventhNode = new TreeNode(175);
-		insert(seventhNode, root);
-		delete(firstNode);
-
-		root = null;
-		insert(new TreeNode(15), root);
-		TreeNode z = new TreeNode(5);
-		insert(z, root);
-		insert(new TreeNode(3), root);
-		insert(new TreeNode(12), root);
-		insert(new TreeNode(10), root);
-		insert(new TreeNode(6), root);
-		insert(new TreeNode(7), root);
-		insert(new TreeNode(13), root);
-		insert(new TreeNode(16), root);
-		insert(new TreeNode(20), root);
-		insert(new TreeNode(18), root);
-		insert(new TreeNode(23), root);
-		delete(z);
+//		root = null;
+//		TreeNode firstNode = new TreeNode(105);
+//		insert(firstNode, root);
+//		TreeNode secondNode = new TreeNode(75);
+//		insert(secondNode, root);
+//		TreeNode thirdNode = new TreeNode(205);
+//		insert(thirdNode, root);
+//		TreeNode fourthNode = new TreeNode(315);
+//		insert(fourthNode, root);
+//		TreeNode fifthNode = new TreeNode(170);
+//		insert(fifthNode, root);
+//		TreeNode sixthNode = new TreeNode(160);
+//		insert(sixthNode, root);
+//		TreeNode seventhNode = new TreeNode(175);
+//		insert(seventhNode, root);
+//		delete(firstNode);
+//
+//		root = null;
+//		insert(new TreeNode(15), root);
+//		TreeNode z = new TreeNode(5);
+//		insert(z, root);
+//		insert(new TreeNode(3), root);
+//		insert(new TreeNode(12), root);
+//		insert(new TreeNode(10), root);
+//		insert(new TreeNode(6), root);
+//		insert(new TreeNode(7), root);
+//		insert(new TreeNode(13), root);
+//		insert(new TreeNode(16), root);
+//		insert(new TreeNode(20), root);
+//		insert(new TreeNode(18), root);
+//		insert(new TreeNode(23), root);
+//		delete(z);
+//		
+//		root = null;
+//		insert(new TreeNode(600), root);
+//		TreeNode x = new TreeNode(150);
+//		insert(x, root);
+//		insert(new TreeNode(100), root);
+//		TreeNode y = new TreeNode(250);
+//		insert(y, root);
+//		insert(new TreeNode(275), root);
+//		insert(new TreeNode(225), root);
+//		inOrder(root);
+//		leftRotate(x);
+//		inOrder(root);
+//		rightRotate(y);
+//		inOrder(root);
 		
 		root = null;
-		insert(new TreeNode(600), root);
-		TreeNode x = new TreeNode(150);
-		insert(x, root);
-		insert(new TreeNode(100), root);
-		TreeNode y = new TreeNode(250);
-		insert(y, root);
-		insert(new TreeNode(275), root);
-		insert(new TreeNode(225), root);
-		inOrder(root);
-		leftRotate(x);
-		inOrder(root);
-		rightRotate(y);
-		inOrder(root);
+		insertAVL(new TreeNode(600), root);
+		insertAVL(new TreeNode(333), root);
+		insertAVL(new TreeNode(700), root);
+		insertAVL(new TreeNode(750), root);
+		insertAVL(new TreeNode(770), root);
+		insertAVL(new TreeNode(725), root);
+		insertAVL(new TreeNode(605), root);
+		insertAVL(new TreeNode(601), root);
+		insertAVL(new TreeNode(602), root);
+		inOrderHeightPrint(root);
 	}
 
-	private static void leftRotate(TreeNode x){
+	private static TreeNode leftRotate(TreeNode x){
 		TreeNode y = x.getRight();
 		x.setRight(y.getLeft());
 		y.setLeft(x);
@@ -105,9 +117,15 @@ public class BinarySearchTree extends Tree {
 		
 		y.setLeft(x);
 		x.setParent(y);
+		
+		x.setHeight(calculateHeight(x));
+		y.setHeight(calculateHeight(y));
+		
+		//Returns the new root
+		return y;
 	}
 	
-	private static void rightRotate(TreeNode y){
+	private static TreeNode rightRotate(TreeNode y){
 		TreeNode x = y.getLeft();
 		y.setLeft(x.getRight());
 		x.setRight(y);
@@ -125,6 +143,11 @@ public class BinarySearchTree extends Tree {
 		
 		x.setRight(y);
 		y.setParent(x);
+		
+		y.setHeight(calculateHeight(y));
+		x.setHeight(calculateHeight(x));
+
+		return x;//returns the new root
 	}
 	
 	// O(h)
@@ -260,14 +283,12 @@ public class BinarySearchTree extends Tree {
 	 * @param root
 	 * @param nodeToInsert
 	 */
-	private static void insert(TreeNode nodeToInsert, TreeNode currentNode) {
+	private static TreeNode insert(TreeNode nodeToInsert, TreeNode currentNode) {
 		// Have to traverse the tree and find the appropriate place to insert
 		// Essentially doing a binary search here.
 		if (currentNode == null) {
-			// Initializing the tree
 			currentNode = nodeToInsert;
 			root = currentNode;
-			return;
 		} else {
 			// Tree has at least one node
 			if (nodeToInsert.getV() < currentNode.getV()) {
@@ -289,6 +310,60 @@ public class BinarySearchTree extends Tree {
 					nodeToInsert.setParent(currentNode);
 				}
 			}
+		}
+		
+		return nodeToInsert;
+	}
+	
+	public static void insertAVL(TreeNode nodeToInsert, TreeNode root){
+		TreeNode insertedNode = insert(nodeToInsert, root);
+		rebalanceAVL(insertedNode);
+	}
+
+	public static void rebalanceAVL(TreeNode insertedNode){
+		TreeNode node = insertedNode;
+		while(node != null){
+			node.setHeight(calculateHeight(node));
+			if(height(node.getLeft()) >= (2 + height(node.getRight()))){
+				if(height(node.getLeft().getLeft()) >= height(node.getLeft().getRight())){
+					node = rightRotate(node);
+				}
+				else{
+					leftRotate(node.getLeft());
+					node = rightRotate(node);
+				}
+			}else if(height(node.getRight()) >= (2 + height(node.getLeft()))){
+				if(height(node.getRight().getRight()) >= height(node.getRight().getLeft())){
+					node = leftRotate(node);
+				}else{
+					rightRotate(node.getRight());
+					node = leftRotate(node);
+				}
+			}
+			
+			node = node.getParent();
+		}
+	}
+	
+	public static void inOrderHeightPrint(TreeNode node){
+		if(node != null){
+			inOrderHeightPrint(node.getLeft());
+			printNodeWithHeight(node);
+			inOrderHeightPrint(node.getRight());
+		}
+	}
+	
+	public static void printNodeWithHeight(TreeNode node){
+		System.out.println(node.getV()+": "+node.getHeight());
+	}
+	private static int calculateHeight(TreeNode node){
+		return (Integer.max(height(node.getLeft()), height(node.getRight())) + 1);
+	}
+	private static int height(TreeNode node) {
+		if(node == null){
+			return -1;
+		}else{
+			return node.getHeight();
 		}
 	}
 
