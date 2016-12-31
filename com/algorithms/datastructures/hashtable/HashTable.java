@@ -1,12 +1,15 @@
 package com.algorithms.datastructures.hashtable;
 
+import com.algorithms.datastructures.linkedlist.LinkedList;
+import com.algorithms.datastructures.linkedlist.LinkedListNode;
+
 public class HashTable {
 
 	public static void main(String[] args){
 		HashTable t = new HashTable(10);
-		t.insert(100, "100");
-		t.insert(10, "10");//Will be a collision
-		t.insert(101, "101");
+		t.insert(100);
+		t.insert(10);//Will be a collision
+		t.insert(101);
 		
 		t.search(100);
 		t.search(10);
@@ -17,33 +20,39 @@ public class HashTable {
 		t.search(10);
 	}
 	
-	private String[] table;
+	private LinkedList[] table;
 	private int tableSize;
 	
 	public HashTable(int tableSize){
 		this.tableSize = tableSize;
-		table = new String[tableSize];
+		table = new LinkedList[tableSize];
+		
+		for(int i = 0; i < tableSize; i++){
+			table[i] = new LinkedList();
+		}
 	}
 	
 	private int hash(int key){
 		return key % this.tableSize;
 	}
 	
-	private void insert(int key, String value){
-		//TODO: Deal with collisions
+	private void insert(int key){
 		int hashedKey = hash(key);
-		table[hashedKey] = value;
+		table[hashedKey].insert(key);
 	}
 	
 	private void delete(int key){
 		int hashedKey = hash(key);
-		table[hashedKey] = null;
+		LinkedList chain = table[hashedKey];
+		chain.delete(key);
 	}
 	
-	private String search(int key){
+	private void search(int key){
 		int hashedKey = hash(key);
-		String value = table[hashedKey];
-		System.out.println(value);
-		return value;
+		LinkedList chain = table[hashedKey];
+		
+		LinkedListNode nodeInChain = chain.search(key);
+		boolean exists = nodeInChain != null;
+		System.out.println(key + ": " +  exists);
 	}
 }
