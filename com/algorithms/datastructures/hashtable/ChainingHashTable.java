@@ -3,10 +3,10 @@ package com.algorithms.datastructures.hashtable;
 import com.algorithms.datastructures.linkedlist.LinkedList;
 import com.algorithms.datastructures.linkedlist.LinkedListNode;
 
-public class HashTable {
+public class ChainingHashTable {
 
 	public static void main(String[] args) {
-		HashTable t = new HashTable(8);
+		ChainingHashTable t = new ChainingHashTable(8);
 		t.insert(100);
 		t.insert(10);// Will be a collision
 		t.insert(101);
@@ -25,7 +25,7 @@ public class HashTable {
 	private int tableSize;
 	private int size;
 
-	public HashTable(int tableSize) {
+	public ChainingHashTable(int tableSize) {
 		this.tableSize = tableSize;
 		this.size = 0;
 		table = new LinkedList[tableSize];
