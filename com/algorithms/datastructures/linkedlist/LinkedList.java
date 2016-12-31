@@ -4,6 +4,10 @@ public class LinkedList {
 
 	private LinkedListNode head;
 
+	public LinkedListNode getHead() {
+		return head;
+	}
+
 	public void insert(int unhashedKey) {
 		LinkedListNode node = new LinkedListNode();
 		node.setUnhashedKey(unhashedKey);
@@ -37,6 +41,10 @@ public class LinkedList {
 
 		if (next != null) {
 			next.setPrev(prev);
+		}
+		
+		if(node == head){
+			head = null;
 		}
 	}
 
