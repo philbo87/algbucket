@@ -33,4 +33,8 @@ public class GraphNode {
 	public void visit() {
 		this.isVisited = true;
 	}
+	
+	public int degree(){
+		return neighbors.size();
+	}
 }

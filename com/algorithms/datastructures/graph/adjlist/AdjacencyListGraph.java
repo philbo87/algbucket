@@ -26,11 +26,24 @@ public class AdjacencyListGraph {
 		g.addNode(4, Arrays.asList(3, 2, 5));
 		g.addNode(5, Arrays.asList(2, 4));
 		
+		System.out.println("BFS:");
 		g.bfs(1);
+		
+		System.out.println("Degrees");
+		g.degree(0);
+		g.degree(1);
+		g.degree(2);
+		g.degree(3);
+		g.degree(4);
+		g.degree(5);
 	}
 
 	public AdjacencyListGraph() {
 		adjList = new HashMap<Integer, GraphNode>();
+	}
+	
+	public void degree(int vertex){
+		System.out.println(vertex +  ": " + adjList.get(vertex).degree());
 	}
 
 	public void bfs(int vertex) {
