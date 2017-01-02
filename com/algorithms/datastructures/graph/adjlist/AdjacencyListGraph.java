@@ -34,13 +34,15 @@ public class AdjacencyListGraph {
 	}
 
 	public void bfs(int vertex) {
+		int level = 0;
 		Queue<Integer> q = new LinkedList<Integer>();
 		GraphNode node = adjList.get(vertex);
 		node.visit();
-		print(node.getValue());
+		print(node.getValue(),level);
 		q.add(node.getValue());
 		
 		while(!q.isEmpty()){
+			level++;
 			Integer current = q.remove();
 			List<Integer> neighbors = adjList.get(current).getNeighbors();
 			
@@ -49,7 +51,7 @@ public class AdjacencyListGraph {
 				GraphNode neighborNode = adjList.get(neighbor);
 				if(!neighborNode.isVisited()){
 					neighborNode.visit();
-					print(neighbor);
+					print(neighbor,level);
 					q.add(neighbor);
 				}
 			}
@@ -72,7 +74,7 @@ public class AdjacencyListGraph {
 		return adjList.get(vertex).getNeighbors();
 	}
 
-	public void print(int value) {
-		System.out.println(value);
+	public void print(int value, int level) {
+		System.out.println(value + " at level: " + level);
 	}
 }
