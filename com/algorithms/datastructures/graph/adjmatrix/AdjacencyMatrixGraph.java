@@ -1,8 +1,7 @@
 package com.algorithms.datastructures.graph.adjmatrix;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Queue;
 
 public class AdjacencyMatrixGraph {
 
@@ -14,29 +13,54 @@ public class AdjacencyMatrixGraph {
 	//
 	// 0
 	
+	public static int[][] graph;
 	public static void main(String[] args){
-		//Construct Undirected graph as Adj List
-		HashMap<Integer,LinkedList<Integer>> adjList = new HashMap<Integer,LinkedList<Integer>>();
-		adjList.put(0, new LinkedList<Integer>());
-		adjList.put(1, new LinkedList<Integer>(Arrays.asList(2,3)));
-		adjList.put(2, new LinkedList<Integer>(Arrays.asList(1,5,4)));
-		adjList.put(3, new LinkedList<Integer>(Arrays.asList(1,4)));
-		adjList.put(4, new LinkedList<Integer>(Arrays.asList(3,2,5)));
-		adjList.put(5, new LinkedList<Integer>(Arrays.asList(2,4)));
+	
 		
 		//Construct Undirected Graph as Adj Matrix
 		//1 = has an edge
 		//0 = does not
-		int[][] adjMatrix = {{0,0,0,0,0,0},
+		int[][] adjMatrix =  {{0,0,0,0,0,0},
 		                     {0,0,1,1,0,0},
 		                     {0,1,0,0,1,1},
 		                     {0,1,0,0,1,0},
 		                     {0,0,1,1,0,1},
 		                     {0,0,1,0,1,0}};
 		
+		graph = adjMatrix;
+		bfs(1);
 		
+	}
+	
+	public static void bfs(int vertex){
+		boolean[] visited = new boolean[graph.length];
+		int level = 0;
 		
+		Queue<Integer> q = new LinkedList<Integer>();
+		visited[vertex] = true;
+		print(vertex,level);
+		q.add(vertex);
 		
+		while(!q.isEmpty()){
+			level++;
+			Integer current = q.remove();
+			for(int i = 0; i < graph[current].length; i++){
+				//Check if we have a neighbor, and enqueue it for visit if not yet visited
+				if(graph[current][i]==1){
+					boolean isVisited = visited[i];
+					if(!isVisited){
+						visited[i]=true;
+						print(i,level);
+						q.add(i);
+					}
+				}
+			}
+		}
+		
+	}
+	
+	public static void print(int value, int level) {
+		System.out.println(value + " at level: " + level);
 	}
 	
 }
