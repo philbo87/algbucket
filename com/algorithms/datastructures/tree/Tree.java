@@ -1,5 +1,9 @@
 package com.algorithms.datastructures.tree;
 
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.concurrent.SynchronousQueue;
+
 public class Tree {
 
 	public static void main(String[] args){
@@ -49,8 +53,40 @@ public class Tree {
 		System.out.println("Post order traversal:");
 		postOrder(n99);
 		
+		System.out.println("BFS:");
+
+		bfs(n99);
+		
 //		System.out.println("isBST: " + isBST(twenty));
 //		System.out.println("LCA " + findCommonAncestor(n99,n102,n103).getV());
+	}
+	
+	//BFS - useful when your tree is wider than deep
+	//Seems not very useful for a binary tree
+	//O(n)
+	public static void bfs(TreeNode root){
+		Queue<TreeNode> q = new java.util.LinkedList<TreeNode>();
+		root.setVisited(true);
+		printNode(root);
+		q.add(root);
+		
+		while(!q.isEmpty()){
+			TreeNode r = q.remove();
+			TreeNode left = r.getLeft();
+			TreeNode right = r.getRight();
+			
+			if(left != null && !left.isVisited()){
+				printNode(left);
+				left.setVisited(true);
+				q.add(left);
+			}
+			
+			if(right != null && !right.isVisited()){
+				printNode(right);
+				right.setVisited(true);
+				q.add(right);
+			}
+		}
 	}
 	
 	//DFS, O(n)

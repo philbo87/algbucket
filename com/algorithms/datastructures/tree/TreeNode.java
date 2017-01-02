@@ -6,6 +6,7 @@ public class TreeNode {
 	private TreeNode left;
 	private TreeNode right;
 	private TreeNode parent;
+	private boolean isVisited;
 	
 	//Augment the Data structure for AVL trees where we cannot afford to always compute the height 
 	private int height = 0; 
@@ -52,6 +53,14 @@ public class TreeNode {
 
 	public void setHeight(int height) {
 		this.height = height;
+	}
+
+	public boolean isVisited() {
+		return isVisited;
+	}
+
+	public void setVisited(boolean isVisited) {
+		this.isVisited = isVisited;
 	}
 	
 	
