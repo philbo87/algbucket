@@ -36,6 +36,8 @@ public class AdjacencyListGraph {
 		g.degree(3);
 		g.degree(4);
 		g.degree(5);
+		
+		dfsStartingAt(1);
 	}
 
 	public AdjacencyListGraph() {
@@ -69,6 +71,28 @@ public class AdjacencyListGraph {
 				}
 			}
 		}
+	}
+	
+	private static HashMap<Integer,Integer> parent = new HashMap<Integer,Integer>();
+
+	public static void dfsStartingAt(int vertex){
+		System.out.println("Visiting neighbors of: " + vertex);
+		
+		if(parent.get(vertex) == null){
+			//Dis be the root
+			parent.put(vertex, -1);
+		}
+		GraphNode node = adjList.get(vertex);
+		for(Integer neighbor : node.getNeighbors()){
+			if(parent.get(neighbor) == null){
+				System.out.println("Vertex "+vertex + " has neighbor " + neighbor);
+				parent.put(neighbor, vertex);
+				dfsStartingAt(neighbor);
+			}	
+		}
+		
+		System.out.println("DONE Visiting neighbors of: " + vertex);
+
 	}
 
 	// This isn't smart enough to manage neighbors. You will have to do that
