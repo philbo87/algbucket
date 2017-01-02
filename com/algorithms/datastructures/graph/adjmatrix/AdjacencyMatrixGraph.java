@@ -14,6 +14,7 @@ public class AdjacencyMatrixGraph {
 	// 0
 	
 	public static int[][] graph;
+	private static Integer[] parent;
 	public static void main(String[] args){
 	
 		
@@ -28,10 +29,42 @@ public class AdjacencyMatrixGraph {
 		                     {0,0,1,0,1,0}};
 		
 		graph = adjMatrix;
+		
 		bfs(1);
+		
+		dfs(1);
+		
 		
 	}
 	
+	public static void dfs(int rootVertex){
+		parent = new Integer[graph.length];
+		for(int i=0;i<parent.length;i++){
+			parent[i]=null;
+		}
+		parent[rootVertex]=-1;
+		dfsVisit(rootVertex);
+		
+	}
+	public static void dfsVisit(int current){
+		System.out.println("Visiting neighbors of: " + current);
+		for(int i=0; i<graph[current].length;i++){
+			//See if the current node has neighbors
+			if(graph[current][i]==1){
+				//It has a neighbor. Does the neighbor have a parent yet?
+				if(parent[i] == null){
+					
+					//Set the parent and visit this neighbor
+					System.out.println("Vertex "+current + " has neighbor " + i);
+					parent[i]=current;
+					dfsVisit(i);
+				}
+				
+			}
+		}
+		System.out.println("DONE Visiting neighbors of: " + current);
+
+	}
 	public static void bfs(int vertex){
 		boolean[] visited = new boolean[graph.length];
 		int level = 0;
@@ -58,6 +91,8 @@ public class AdjacencyMatrixGraph {
 		}
 		
 	}
+	
+	
 	
 	public static void print(int value, int level) {
 		System.out.println(value + " at level: " + level);
